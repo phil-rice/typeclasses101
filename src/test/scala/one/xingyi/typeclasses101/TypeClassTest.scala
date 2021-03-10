@@ -3,7 +3,9 @@ package one.xingyi.typeclasses101
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 class TypeClassTest extends AnyFlatSpec with should.Matchers {
 
@@ -23,10 +25,10 @@ class TypeClassTest extends AnyFlatSpec with should.Matchers {
   it should "allow us to abstract over lists/vectors/etc using applicatives" in {
     import HigherOrderTypeClases._
 
-    addAll(list) shouldBe List(6)
-    addAll(vector) shouldBe Vector(6)
-    addAll(set) shouldBe Set(6)
-    addAll(future) shouldBe Future.successful(6)
+    addToAll(list, 3) shouldBe List(4, 5, 6)
+    addToAll(vector, 3) shouldBe Vector(4, 5, 6)
+    addToAll(set, 3) shouldBe Set(4, 5, 6)
+    Await.result(addToAll(future, 3), Duration.Inf) shouldBe  9
   }
 
 

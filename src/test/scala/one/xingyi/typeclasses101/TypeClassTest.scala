@@ -20,7 +20,7 @@ class TypeClassTest extends AnyFlatSpec with should.Matchers {
 
   behavior of "HigherOrderTypeClasses"
 
-  it should "allow us to abstract over lists/vectors/etc using applicatives" in {
+  it should "allow us to abstract over lists/vectors/etc using functors" in {
     import HigherOrderTypeClases._
 
     addAll(list) shouldBe List(6)

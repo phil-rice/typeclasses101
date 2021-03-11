@@ -22,15 +22,38 @@ object TypeClass {
   def addAll[T](list: List[T]): T = ???
 }
 
+trait Functor[F[_]] {
+  def map[T, T1](f: F[T], fn: T => T1): F[T1]
+}
 
+object Functor {
+  implicit val functorForOption: Functor[Option] = new Functor[Option] {
+    override def map[T, T1](f: Option[T], fn: T => T1): Option[T1] = f.map(fn)
+  }
+}
+
+trait Monoid[T] {
+  def add(t: T, t2: T): T
+
+}
 object HigherOrderTypeClases {
   val list = List(1, 2, 3)
   val vector = Vector(1, 2, 3)
   val set = Set(1, 2, 3)
   val future = Future.successful(6)
 
+  //Currying
+  def add(one: Int, two: Int) = one + two
+
+  def curriedAdd(one: Int)(two: Int) = one + two
+
+  def add3: Int => Int = curriedAdd(3)
+  def add6: Int => Int = curriedAdd(6)
+
+
   /** For every item in F it adds t to it */
-  def addToAll[F[_]](f: F[Int], i: Int): F[Int] = ???
+  def addToAll[F[_]: Functor, T: Monoid](f: F[T], i: T)(implicit functor: Functor[F], monoid: Monoid[T]): F[T] = functor.map[T, T](f, t => monoid.add(t, i))
+
 }
 
 object CombinedTypeClases {

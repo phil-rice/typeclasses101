@@ -29,7 +29,8 @@ object HigherOrderTypeClases {
   val set = Set(1, 2, 3)
   val future = Future.successful(6)
 
-  def addAll[F[_], T](f: F[T]): F[T] = ???
+  /** For every item in F it adds t to it */
+  def addToAll[F[_]](f: F[Int], i: Int): F[Int] = ???
 }
 
 object CombinedTypeClases {

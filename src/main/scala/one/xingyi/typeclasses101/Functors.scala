@@ -39,17 +39,15 @@ object FunctorDemo extends App {
   def add[F[_], T](f: F[T], t: T)(implicit functor: Functor[F], monoid: Monoid[T]): F[T] =
     functor.map(f, monoid.add(_, t))
 
-
-
   println(add(List(1, 2, 3), 3))
 
-//  type ListOption[T] = List[Option[T]]
-//  println(add[ListOption, Int](List(Option(1), Option(2), Option(3)), 3))
-//
-//  type FutureList[T] = Future[List[T]]
-//  add[FutureList, Int](Future.successful(List(1, 2, 3)), 3).foreach(println)
-//
-//  type FutureListOption[T] = Future[List[Option[T]]]
-//  add[FutureListOption, Int](Future.successful(List(Option(1), Option(2), Option(3))), 3).foreach(println)
+  type ListOption[T] = List[Option[T]]
+  println(add[ListOption, Int](List(Option(1), Option(2), Option(3)), 3))
+
+  type FutureList[T] = Future[List[T]]
+  add[FutureList, Int](Future.successful(List(1, 2, 3)), 3).foreach(println)
+
+  type FutureListOption[T] = Future[List[Option[T]]]
+  add[FutureListOption, Int](Future.successful(List(Option(1), Option(2), Option(3))), 3).foreach(println)
 
 }

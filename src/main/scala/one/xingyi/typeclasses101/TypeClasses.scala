@@ -22,20 +22,20 @@ object TypeClass {
   def addAll[T](list: List[T]): T = ???
 }
 
-trait Functor[F[_]] {
-  def map[T, T1](f: F[T], fn: T => T1): F[T1]
-}
 
-object Functor {
-  implicit val functorForOption: Functor[Option] = new Functor[Option] {
-    override def map[T, T1](f: Option[T], fn: T => T1): Option[T1] = f.map(fn)
-  }
-}
 
 trait Monoid[T] {
   def add(t: T, t2: T): T
-
 }
+object Monoid{
+  implicit  val monoidForInt: Monoid[Int] = new Monoid[Int] {
+    override def add(t: Int, t2: Int): Int = t + t2
+  }
+  implicit  val monoidForDouble: Monoid[Double] = new Monoid[Double] {
+    override def add(t: Double, t2: Double): Double = t + t2
+  }
+}
+
 object HigherOrderTypeClases {
   val list = List(1, 2, 3)
   val vector = Vector(1, 2, 3)
